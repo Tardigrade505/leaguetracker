@@ -1,0 +1,8 @@
+### data files ###
+**/data
+
+### target directory from Maven ###
+**/target
+
+### Intellij project files ###
+*.iml
