@@ -10,23 +10,19 @@
 
     <title>EDH Brawler</title>
 </head>
-
 <body>
-<p><h1 align="center">Seasons</h1></p>
-<div class="container">
-    <table id="seasonTable" class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Season</th>
-            <th scope="col">ID</th>
-        </tr>
-        </thead>
-    </table>
-</div>
+<p><h1 align="center">Enter Your Game Results Below</h1></p>
+<br>
 
 <div class="container">
-    <a class="btn btn-primary btn-lg btn-block" href="newSeason.html">Start New Season</a>
-    <!--<button onclick="newSeason.html" type="button" class="btn btn-primary btn-lg btn-block">Start New Season</button>-->
+    <div class="container" id="winners-form"></div>
+    <br>
+    <div class="container">
+        <div class="row" id="achievement-winners-form"></div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Record</button>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->
@@ -34,7 +30,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<script src="scripts/getSeasons.js?v=1"></script>
-<script src="scripts/parseSeasonListIntoTable.js"></script>
+<script src="scripts/recordResults.js"></script>
 </body>
 </html>

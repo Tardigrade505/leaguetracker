@@ -20,19 +20,18 @@
 <p><h1 align="center">Create a New Season</h1></p>
 
 <div class="container">
-    <div id="form-messages"></div>
-    <div class="results__display"></div>
+    <!--<div id="form-messages"></div>-->
+    <!--<div class="results__display"></div>-->
     <form id="season-form" action="http://localhost:8080/seasons">
-    <!--<form id="season-form">-->
         <div class="form-group" id="season-name-group">
             <label class="col-form-label" for="season-name">Season Name</label>
             <input type="text" class="form-control" placeholder="Season Name" id="season-name" required="required" data-error="Season name is required." name="name">
         </div>
         <p><strong>Players</strong></p>
         <div class="form-group" id="player-form-list">
-            <!--<input type="hidden" name="resulturl" value="http://localhost:8080/welcome.html">-->
-            <!--<label class="col-form-label" for="player-name">Player Name</label>-->
-            <p><input type="text" class="form-control" placeholder="Player Name (Ex: The Puppet Master)" id="player-name1" required="required" data-error="Player name is required." name="players"></p>
+            <p><input type="text" class="form-control" placeholder="Player 1 (Ex: The Puppet Master)" required="required" data-error="Player name is required (minimum 3 players)." name="players"></p>
+            <p><input type="text" class="form-control" placeholder="Player 2 (Ex: Professor Pillow-fort)" required="required" data-error="Player name is required (minimum 3 players)." name="players"></p>
+            <p><input type="text" class="form-control" placeholder="Player 3 (Ex: Durdle Turtle)" required="required" data-error="Player name is required (minimum 3 players)." name="players"></p>
         </div>
 
         <button onclick="addPlayerForm();" style="float: left;" type="button" class="btn btn-primary">+</button>
