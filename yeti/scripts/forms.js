@@ -36,12 +36,15 @@ $(document).ready(function() {
             url: $(form).attr('action'),
             data: json
         }).done(function(response) {
+                console.log('Response = ' + response.id);
               // Make sure that the formMessages div has the 'success' class.
               $(formMessages).removeClass('error');
               $(formMessages).addClass('success');
 
+              window.location.href="mainMenu.html?seasonId=" + response.id;
+
               // Set the message text.
-              $(formMessages).text(response);
+//              $(formMessages).text(response);
           }).fail(function(data) {
                 // Make sure that the formMessages div has the 'error' class.
                 $(formMessages).removeClass('success');
@@ -54,6 +57,6 @@ $(document).ready(function() {
                     $(formMessages).text('Oops! An error occured and your message could not be sent.');
                 }
             });
-            window.location.href="mainMenu.html?seasonId=5";
+//            window.location.href="mainMenu.html?seasonId=5";
         });
 });

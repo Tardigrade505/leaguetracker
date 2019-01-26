@@ -10,6 +10,11 @@ function nextPage() {
     window.location.href="recordResults.html?seasonId=" + seasonId;
 }
 
+/**
+* Updates the headers with player in first and player in last with the players in first
+* and in last in the season. If this is the first session and no one has any points,
+* do not display the player in first and player in last headings
+*/
 function fillPlayerHeaders() {
     // Get season ID and players
     const urlParams = new URLSearchParams(window.location.search);
@@ -19,30 +24,74 @@ function fillPlayerHeaders() {
     $.getJSON("http://localhost:8080/seasons/" + seasonId + "/players",
         function (json) {
             console.log('JSON returned = ' + json);
+            var noPoints = false;
+
+            // Check for edge case where all players have 0 points
+            var pointsSum = 0;
+            for (i = 0; i < json._embedded.playerList.length; i++) {
+                console.log('Player = ' + json._embedded.playerList[i].name + ' points = ' + json._embedded.playerList[i].totalPoints);
+                pointsSum += json._embedded.playerList[i].totalPoints;
+            }
+            if (pointsSum == 0) {
+                noPoints = true;
+            }
+
 
             // Sort the players by most points
             json._embedded.playerList.sort(function(a, b) {
             return b.totalPoints - a.totalPoints;
             });
 
-            // Store the player in first for later pages
-            var playerInFirst = json._embedded.playerList[0].name;
-            sessionStorage.setItem("playerInFirst", playerInFirst);
+            // Get all players in first and store them
+            var playersInFirst = [];
+            var firstPlacePoints = json._embedded.playerList[0].totalPoints;
+            playersInFirst.push(json._embedded.playerList[0].name);
 
-            var playerInFirstHeader = $('<h3>');
-            playerInFirstHeader.append('<span style="font-weight: bold;">1st</span>' + ': ' + playerInFirst);
-            playerInFirstHeader.append('</h3>');
-            $('#player-in-first-header').append(playerInFirstHeader);
+            for (i = 1; i < json._embedded.playerList.length; i++) {
+                if (json._embedded.playerList[i].totalPoints == firstPlacePoints) {
+                    playersInFirst.push(json._embedded.playerList[i].name);
+                } else {
+                    break;
+                }
+            }
+
+            // Store the players in first for later pages
+//                var playerInFirst = json._embedded.playerList[0].name;
+            sessionStorage.setItem("playerInFirst", JSON.stringify(playersInFirst));
+
+            // Get all players in first and store them
+            var playersInLast = [];
+            console.log('TEST LENGTH = ' + playersInLast.length);
+            var lastPlacePoints = json._embedded.playerList[json._embedded.playerList.length - 1].totalPoints;
+            playersInLast.push(json._embedded.playerList[json._embedded.playerList.length - 1].name);
+
+            for (i = 1; i < json._embedded.playerList.length; i++) {
+                var currentIndex = json._embedded.playerList.length - (i + 1);
+                if (json._embedded.playerList[currentIndex].totalPoints == lastPlacePoints) {
+                    playersInLast.push(json._embedded.playerList[currentIndex].name);
+                } else {
+                    break;
+                }
+            }
+
+            console.log('Players in last = ' + playersInLast);
 
             // Store the player in last for later pages
-            var playerInLast = json._embedded.playerList[json._embedded.playerList.length-1].name
-            sessionStorage.setItem("playerInLast", playerInLast);
+//                var playerInLast = json._embedded.playerList[json._embedded.playerList.length-1].name
+            sessionStorage.setItem("playerInLast", JSON.stringify(playersInLast));
 
-            var playerInLastHeader = $('<h3>');
-            playerInLastHeader.append('<span style="font-weight: bold;">Bonus</span>' + ': ' + playerInLast);
-            playerInLastHeader.append('</h3>');
-            $('#player-in-last-header').append(playerInLastHeader);
-});
+            if (!noPoints) {
+                var playerInFirstHeader = $('<h3>');
+                playerInFirstHeader.append('<span style="font-weight: bold;">1st</span>' + ': ' + playersInFirst);
+                playerInFirstHeader.append('</h3>');
+                $('#player-in-first-header').append(playerInFirstHeader);
+
+                var playerInLastHeader = $('<h3>');
+                playerInLastHeader.append('<span style="font-weight: bold;">Bonus</span>' + ': ' + playersInLast);
+                playerInLastHeader.append('</h3>');
+                $('#player-in-last-header').append(playerInLastHeader);
+            }
+    });
 }
 
 function displayGame() {
